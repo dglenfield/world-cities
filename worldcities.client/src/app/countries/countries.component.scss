@@ -1,0 +1,18 @@
+table.mat-table {
+  width: 100%;
+}
+
+table {
+  tr:nth-child(even) {
+    background: #F2F2F2;
+  }
+
+  tr:nth-child(odd) {
+    background: #FFF;
+  }
+}
+
+mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
