@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from './../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+import { environment } from './../../environments/environment';
 import { City } from './city';
 
 @Component({
@@ -23,6 +26,7 @@ export class CitiesComponent implements OnInit {
   defaultPageSize: number = 10;
   defaultFilterColumn: string = "name";
   filterQuery?: string;
+  filterTextChanged: Subject<string> = new Subject<string>();
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -66,5 +70,16 @@ export class CitiesComponent implements OnInit {
         },
         error: (error) => console.error(error)
       });
+  }
+
+  // Debounce filter text changes.
+  onFilterTextChanged(filterText: string) {
+    if (!this.filterTextChanged.observed) {
+      this.filterTextChanged.pipe(debounceTime(1000), distinctUntilChanged())
+        .subscribe(query => {
+          this.loadData(query);
+        });
+    }
+    this.filterTextChanged.next(filterText);
   }
 }
