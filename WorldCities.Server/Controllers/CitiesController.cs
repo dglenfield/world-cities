@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorldCities.Server.Data;
 using WorldCities.Server.Data.Models;
@@ -25,12 +20,21 @@ public class CitiesController : ControllerBase
     // GET: api/Cities/?pageIndex=0&pageSize=10
     // GET: api/Cities/?pageIndex=0&pageSize=10&sortColumn=name&sortOrder=asc
     [HttpGet]
-    public async Task<ActionResult<ApiResult<City>>> GetCities(
+    public async Task<ActionResult<ApiResult<CityDTO>>> GetCities(
         int pageIndex = 0, int pageSize = 10,
         string? sortColumn = null, string? sortOrder = null,
         string? filterColumn = null, string? filterQuery = null)
     {
-        return await ApiResult<City>.CreateAsync(_context.Cities.AsNoTracking(), 
+        return await ApiResult<CityDTO>.CreateAsync(
+            _context.Cities.AsNoTracking().Select(c => new CityDTO()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Lat = c.Lat,
+                Lon = c.Lon,
+                CountryId = c.Country!.Id,
+                CountryName = c.Country!.Name
+            }), 
             pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     }
 
