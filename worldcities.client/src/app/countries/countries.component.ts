@@ -17,7 +17,7 @@ import { AbstractControl } from '@angular/forms';
   styleUrl: './countries.component.scss'
 })
 export class CountriesComponent implements OnInit {
-  public displayedColumns: string[] = ['id', 'name', 'iso2', 'iso3'];
+  public displayedColumns: string[] = ['id', 'name', 'iso2', 'iso3', 'totalCities'];
   public countries!: MatTableDataSource<Country>;
 
   public defaultSortColumn: string = "name";
