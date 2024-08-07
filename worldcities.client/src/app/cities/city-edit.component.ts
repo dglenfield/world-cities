@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, AbstractControl, AsyncValidatorFn, AsyncValidator } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
+import { BaseFormComponent } from '../base-form.component';
 import { City } from './city';
 import { Country } from './../countries/country';
 
@@ -14,13 +15,10 @@ import { Country } from './../countries/country';
   templateUrl: './city-edit.component.html',
   styleUrl: './city-edit.component.scss'
 })
-export class CityEditComponent implements OnInit {
+export class CityEditComponent extends BaseFormComponent implements OnInit {
 
   // The view title.
   title?: string;
-
-  // The form model.
-  form!: FormGroup;
 
   // The city object to edit or create.
   city?: City;
@@ -33,6 +31,7 @@ export class CityEditComponent implements OnInit {
   countries?: Country[];
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient) {
+    super();
   }
 
   ngOnInit() {

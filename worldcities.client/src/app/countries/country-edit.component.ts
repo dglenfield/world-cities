@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, AsyncValidator, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { BaseFormComponent } from '../base-form.component';
 import { environment } from './../../environments/environment';
 import { Country } from './country';
 
@@ -13,13 +14,10 @@ import { Country } from './country';
   templateUrl: './country-edit.component.html',
   styleUrl: './country-edit.component.scss'
 })
-export class CountryEditComponent implements OnInit {
+export class CountryEditComponent extends BaseFormComponent implements OnInit {
 
   // The view title.
   title?: string;
-
-  // The form model.
-  form!: FormGroup;
 
   // The country object to edit or create.
   country?: Country;
@@ -32,7 +30,8 @@ export class CountryEditComponent implements OnInit {
   countries?: Country[];
 
   constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute,
-    private router: Router, private http: HttpClient) {
+              private router: Router, private http: HttpClient) {
+    super();
   }
 
   ngOnInit() {
