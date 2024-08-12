@@ -5,7 +5,7 @@ using WorldCities.Server.Data.Models;
 
 namespace WorldCities.Server.Tests;
 
-public class CitiesController_Test
+public class CitiesController_Tests
 {
     /// <summary>
     /// Test the GetCity() method.
