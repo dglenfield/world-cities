@@ -21,7 +21,7 @@ public class AccountController : ControllerBase
         _userManager = userManager;
     }
 
-    [HttpPost]
+    [HttpPost("Login")]
     public async Task<IActionResult> Login(ApiLoginRequest loginRequest)
     {
         var user = await _userManager.FindByNameAsync(loginRequest.Email);
